@@ -1,0 +1,83 @@
+.header {
+    background-color: black;
+    height: 60px;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+/* 全体レイアウト */
+.header__inner {
+    width: 100%;
+    padding: 0 20px;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+}
+
+/* logo */
+.header__logo img {
+    height: 25px;
+    display: block;
+}
+
+/* search（ここが重要） */
+.header__search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.header__search form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.header__search input {
+    width: 100%;
+    max-width: 400px;
+
+    height: 36px;
+
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* nav */
+.header__nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    flex-shrink: 0;
+}
+
+/* links */
+.header__mypage a {
+    color: white;
+}
+
+.header__sell a {
+    background-color: white;
+    color: black;
+
+    padding: 6px 14px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* logout button */
+.logout-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
