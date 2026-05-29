@@ -1,0 +1,69 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
+
+/*
+|--------------------------------------------------------------------------
+| 商品関連（誰でもアクセス可能）
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [ProductController::class, 'index']);
+Route::get('/item/{id}', [ProductController::class, 'show']);
+
+/*
+|--------------------------------------------------------------------------
+| ゲスト専用（未ログイン）
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('guest')->group(function () {
+
+    // ログイン画面
+    Route::get('/login', function () {
+        return view('auth.login');
+    })->name('login');
+
+    // ログイン処理
+    Route::post('/login', [AuthController::class, 'login']);
+
+    // 会員登録処理
+    Route::post('/register', [AuthController::class, 'register']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| 認証必須
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(function () {
+
+    // ログアウト
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | いいね・コメント
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/like/{product_id}', [LikeController::class, 'store']);
+    Route::post('/comment/{product_id}', [CommentController::class, 'store']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | マイページ
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/mypage', [ProfileController::class, 'mypage']);
+
+    Route::get('/mypage/profile', [ProfileController::class, 'edit']);
+    Route::post('/mypage/profile', [ProfileController::class, 'update']);
+});
