@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Order;
 
 class Product extends Model
 {
@@ -30,5 +31,9 @@ class Product extends Model
     public function likedUsers()
     {
         return $this->belongsToMany(User::class, 'likes');
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

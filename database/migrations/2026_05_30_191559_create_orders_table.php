@@ -11,22 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
+            // 購入者
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('name');
-            $table->text('description')->nullable();
+            // 購入商品
+            $table->foreignId('product_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            // 支払方法
+            $table->string('payment_method');
+
+            // 配送先
+            $table->string('postal_code');
+            $table->string('address');
+            $table->string('building')->nullable();
+
+            // 購入時価格
             $table->integer('price');
-            $table->string('image')->nullable();
-            $table->integer('stock')->default(0);
-            $table->string('brand')->nullable();
-            $table->string('condition')->nullable();
-            $table->boolean('is_sold')->default(false);
 
             $table->timestamps();
         });
@@ -37,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('orders');
     }
 };

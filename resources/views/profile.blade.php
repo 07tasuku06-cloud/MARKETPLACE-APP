@@ -13,6 +13,7 @@
 
         <form class="auth__form" method="POST" action="/mypage/profile" enctype="multipart/form-data">
             @csrf
+
             <!-- プロフィール画像 -->
             <div class="profile__image-area">
 
@@ -65,7 +66,8 @@
             <input
                 class="auth__input"
                 type="text"
-                name="postal_code">
+                name="postal_code"
+                value="{{ old('postal_code', Auth::user()->postal_code) }}">
 
             <!-- 住所 -->
             <label class="auth__label">住所</label>
@@ -73,7 +75,8 @@
             <input
                 class="auth__input"
                 type="text"
-                name="address">
+                name="address"
+                value="{{ old('address', Auth::user()->address) }}">
 
             <!-- 建物名 -->
             <label class="auth__label">建物名</label>
@@ -81,7 +84,8 @@
             <input
                 class="auth__input"
                 type="text"
-                name="building_name">
+                name="building_name"
+                value="{{ old('building_name', Auth::user()->building_name) }}">
 
             <button class="auth__button" type="submit">
                 保存

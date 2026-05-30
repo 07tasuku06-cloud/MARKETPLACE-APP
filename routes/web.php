@@ -6,7 +6,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\PurchaseController;
 /*
 |--------------------------------------------------------------------------
 | 商品関連（誰でもアクセス可能）
@@ -24,6 +24,8 @@ Route::get('/item/{id}', [ProductController::class, 'show']);
 
 Route::middleware('guest')->group(function () {
 
+
+
     // ログイン画面
     Route::get('/login', function () {
         return view('auth.login');
@@ -31,6 +33,11 @@ Route::middleware('guest')->group(function () {
 
     // ログイン処理
     Route::post('/login', [AuthController::class, 'login']);
+
+    // 会員登録画面
+    Route::get('/register', function () {
+        return view('auth.register');
+    });
 
     // 会員登録処理
     Route::post('/register', [AuthController::class, 'register']);
@@ -43,6 +50,13 @@ Route::middleware('guest')->group(function () {
 */
 
 Route::middleware('auth')->group(function () {
+
+
+    // 購入画面
+    Route::get('/purchase/{id}', [PurchaseController::class, 'show']);
+
+    // 購入処理
+    Route::post('/purchase/{id}', [PurchaseController::class, 'store']);
 
     // ログアウト
     Route::post('/logout', [AuthController::class, 'logout']);
