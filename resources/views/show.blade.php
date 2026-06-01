@@ -80,9 +80,11 @@
         </div>
 
         <!-- 購入ボタン -->
-        <button class="purchase-button">
-            購入手続きへ
-        </button>
+        <form method="GET" action="/purchase/{{ $product->id }}">
+            <button type="submit" class="purchase-button">
+                購入手続きへ
+            </button>
+        </form>
 
         <!-- 商品説明 -->
         <div class="product-section">

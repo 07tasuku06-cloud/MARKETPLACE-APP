@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
@@ -58,7 +59,10 @@ class ProfileController extends Controller
         }
 
         if ($page === 'buy') {
-            $products = collect();
+            $products = Order::with('product')
+                ->where('user_id', $user->id)
+                ->latest()
+                ->get();
         }
 
         return view('mypage', compact('user', 'products', 'page'));

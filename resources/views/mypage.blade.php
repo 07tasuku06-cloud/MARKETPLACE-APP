@@ -68,6 +68,9 @@
     <!-- 商品一覧 -->
     <div class="product-list">
 
+        {{-- 出品 --}}
+        @if($page !== 'buy')
+
         @foreach ($products as $product)
 
         <div class="product-card">
@@ -79,6 +82,30 @@
         </div>
 
         @endforeach
+
+        {{-- 購入履歴 --}}
+        @else
+
+        @foreach ($products as $order)
+
+        <div class="product-card">
+
+            <img src="{{ $order->product->image }}" alt="">
+
+            <p>{{ $order->product->name }}</p>
+
+            <p>{{ $order->price }}円</p>
+
+            @if($order->product->is_sold)
+            <p class="sold">SOLD</p>
+            @endif
+
+        </div>
+
+
+        @endforeach
+
+        @endif
 
     </div>
 

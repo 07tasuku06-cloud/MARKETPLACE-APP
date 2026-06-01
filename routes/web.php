@@ -58,6 +58,17 @@ Route::middleware('auth')->group(function () {
     // 購入処理
     Route::post('/purchase/{id}', [PurchaseController::class, 'store']);
 
+    //配送先変更
+    Route::get(
+        '/purchase/address/{product_id}',
+        [PurchaseController::class, 'showAddressForm']
+    );
+
+    Route::post(
+        '/purchase/address/{product_id}',
+        [PurchaseController::class, 'updateAddress']
+    );
+
     // ログアウト
     Route::post('/logout', [AuthController::class, 'logout']);
 

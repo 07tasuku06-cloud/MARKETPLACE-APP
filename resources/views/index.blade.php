@@ -36,8 +36,8 @@
 
         <p>{{ $product->name }}</p>
 
-        @if($product->status === 'sold')
-        <p>SOLD</p>
+        @if($product->is_sold)
+        <p class="sold">SOLD</p>
         @endif
 
     </a>
