@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
@@ -21,47 +22,47 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'postal_code' => 'required|string',
+            'address' => 'required|string',
+            'building_name' => 'nullable|string',
+        ]);
+
         $user = Auth::user();
 
-        $data = [
-            'name' => $request->name,
-            'postal_code' => $request->postal_code,
-            'address' => $request->address,
-            'building_name' => $request->building_name,
-            'is_profile_completed' => true,
-        ];
+        // ベースデータ
+        $data = $validated;
+        $data['is_profile_completed'] = true;
 
         // 画像保存
         if ($request->hasFile('profile_image')) {
-
-            $path = $request->file('profile_image')
+            $data['profile_image'] = $request->file('profile_image')
                 ->store('profiles', 'public');
-
-            $data['profile_image'] = $path;
         }
 
         $user->update($data);
 
-        return redirect('/');
+        return redirect('/mypage');
     }
 
+    /**
+     * マイページ
+     */
     public function mypage(Request $request)
     {
         $user = auth()->user();
-
         $page = $request->page;
 
-        // 出品商品
         if ($page === 'sell' || $page === null) {
-
-            $products = Product::where('user_id', $user->id)
-                ->get();
+            $products = Product::where('user_id', $user->id)->get();
         }
 
-        // 購入商品（未実装）
         if ($page === 'buy') {
-
-            $products = collect();
+            $products = Order::with('product')
+                ->where('user_id', $user->id)
+                ->latest()
+                ->get();
         }
 
         return view('mypage', compact('user', 'products', 'page'));

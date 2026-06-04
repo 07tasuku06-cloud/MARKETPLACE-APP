@@ -1,0 +1,152 @@
+.purchase {
+    width: 100%;
+    padding: 40px 20px;
+    background: #ffffff;
+    margin-left: -35px;
+    /* Figma位置調整 */
+}
+
+/* 全体 */
+.purchase__container {
+    max-width: 1100px;
+    margin: 0 auto;
+
+    display: flex;
+    gap: 70px;
+    align-items: flex-start;
+}
+
+/* 左 */
+.purchase__left {
+    flex: 1;
+}
+
+/* 商品カード */
+.purchase__product {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+/* 商品画像 */
+.purchase__image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    background: #ddd;
+    margin-left: -20px;
+}
+
+/* 商品名・価格 */
+.purchase__name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.purchase__price {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* セクション共通 */
+.purchase__section {
+    padding: 20px 0;
+    border-top: 1px solid black;
+}
+
+/* 配送先セクションにも下線 */
+.purchase__section:nth-of-type(2) {
+    border-bottom: 1px solid black;
+}
+
+/* タイトル */
+.purchase__title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    padding: 0 20px;
+}
+
+/* select */
+.purchase__select {
+    width: 180px;
+    height: 30px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 0;
+    padding: 6px 10px;
+    background: #fff;
+
+    margin-left: 45px;
+}
+
+/* 配送先 */
+.purchase__address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0 0;
+}
+
+.purchase__address-body {
+    margin-left: 50px;
+}
+
+.purchase__link {
+    font-size: 13px;
+    color: #1e6fff;
+    text-decoration: none;
+}
+
+/* 右カラム */
+.purchase__right {
+    width: 340px;
+    position: sticky;
+    top: 20px;
+    margin-top: 15px;
+}
+
+/* サマリー */
+.purchase__summary {
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+    background: #fff;
+}
+
+/* 行 */
+.purchase__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 50px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.purchase__row:last-child {
+    border-bottom: none;
+}
+
+/* ボタン */
+.purchase__button {
+    width: 100%;
+    height: 40px;
+
+    margin-top: 45px;
+
+    background: #ff4d4d;
+    color: #fff;
+
+    border: none;
+    border-radius: 5px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.purchase__button:hover {
+    opacity: 0.85;
+}

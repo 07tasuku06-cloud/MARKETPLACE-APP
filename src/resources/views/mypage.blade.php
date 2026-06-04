@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 @extends('layouts.app')
 
 @section('css')
@@ -68,17 +72,67 @@
     <!-- 商品一覧 -->
     <div class="product-list">
 
+        {{-- 出品 --}}
+        @if($page !== 'buy')
+
         @foreach ($products as $product)
 
         <div class="product-card">
 
-            <img src="{{ $product->image }}" alt="">
+            @if(Str::startsWith($product->image, '/images/'))
 
-            <p>{{ $product->name }}</p>
+                <img
+                    src="{{ asset($product->image) }}"
+                    alt="{{ $product->name }}">
+
+                @else
+
+                <img
+                    src="{{ asset('storage/' . $product->image) }}"
+                    alt="{{ $product->name }}">
+
+                @endif
+                <p>{{ $product->name }}</p>
 
         </div>
 
         @endforeach
+
+        {{-- 購入履歴 --}}
+        @else
+
+        @foreach ($products as $order)
+
+        <div class="product-card">
+
+            @if(Str::startsWith($order->product->image, '/images/'))
+
+            <img
+                src="{{ asset($order->product->image) }}"
+                alt="{{ $order->product->name }}">
+
+            @else
+
+            <img
+                src="{{ asset('storage/' . $order->product->image) }}"
+                alt="{{ $order->product->name }}">
+
+            @endif
+
+            <p>{{ $order->product->name }}</p>
+
+            <p>{{ $order->price }}円</p>
+
+            @if($order->product->is_sold)
+            <p class="sold">SOLD</p>
+            @endif
+
+        </div>
+
+
+        @endforeach
+
+        @endif
 
     </div>
 

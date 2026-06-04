@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 @extends('layouts.app')
 
 @section('css')
@@ -32,16 +36,23 @@
         href="/item/{{ $product->id }}"
         class="product-card">
 
-        <img src="{{ $product->image }}" alt="">
+        @if(Str::startsWith($product->image, '/images/'))
+
+        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+
+        @else
+
+        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+
+        @endif
 
         <p>{{ $product->name }}</p>
 
-        @if($product->status === 'sold')
-        <p>SOLD</p>
+        @if($product->is_sold)
+        <p class="sold">SOLD</p>
         @endif
 
     </a>
-
 
     @endforeach
 

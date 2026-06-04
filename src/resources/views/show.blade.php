@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 @extends('layouts.app')
 
 @section('css')
@@ -10,10 +14,21 @@
 
     <!-- 左：商品画像 -->
     <div class="product-detail__left">
+        @if(Str::startsWith($product->image, '/images/'))
+
         <img
             class="product-detail__image"
-            src="{{ $product->image }}"
-            alt="商品画像">
+            src="{{ asset($product->image) }}"
+            alt="{{ $product->name }}">
+
+        @else
+
+        <img
+            class="product-detail__image"
+            src="{{ asset('storage/' . $product->image) }}"
+            alt="{{ $product->name }}">
+
+        @endif
     </div>
 
     <!-- 右：商品情報 -->
@@ -80,9 +95,11 @@
         </div>
 
         <!-- 購入ボタン -->
-        <button class="purchase-button">
-            購入手続きへ
-        </button>
+        <form method="GET" action="/purchase/{{ $product->id }}">
+            <button type="submit" class="purchase-button">
+                購入手続きへ
+            </button>
+        </form>
 
         <!-- 商品説明 -->
         <div class="product-section">
@@ -173,6 +190,11 @@
                 <h3>商品へのコメント</h3>
 
                 <textarea name="comment"></textarea>
+                @error('comment')
+                <p style="color:red;">
+                    {{ $message }}
+                </p>
+                @enderror
 
                 <button type="submit" class="comment-button">
                     コメントを送信する
