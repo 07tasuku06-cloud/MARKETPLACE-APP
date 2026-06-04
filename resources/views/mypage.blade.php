@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 @extends('layouts.app')
 
 @section('css')
@@ -75,9 +79,20 @@
 
         <div class="product-card">
 
-            <img src="{{ $product->image }}" alt="">
+            @if(Str::startsWith($product->image, '/images/'))
 
-            <p>{{ $product->name }}</p>
+                <img
+                    src="{{ asset($product->image) }}"
+                    alt="{{ $product->name }}">
+
+                @else
+
+                <img
+                    src="{{ asset('storage/' . $product->image) }}"
+                    alt="{{ $product->name }}">
+
+                @endif
+                <p>{{ $product->name }}</p>
 
         </div>
 
@@ -90,7 +105,19 @@
 
         <div class="product-card">
 
-            <img src="{{ $order->product->image }}" alt="">
+            @if(Str::startsWith($order->product->image, '/images/'))
+
+            <img
+                src="{{ asset($order->product->image) }}"
+                alt="{{ $order->product->name }}">
+
+            @else
+
+            <img
+                src="{{ asset('storage/' . $order->product->image) }}"
+                alt="{{ $order->product->name }}">
+
+            @endif
 
             <p>{{ $order->product->name }}</p>
 

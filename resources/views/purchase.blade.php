@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 @extends('layouts.app')
 
 @section('css')
@@ -15,10 +19,21 @@
 
             <div class="purchase__product">
 
+                @if(Str::startsWith($product->image, '/images/'))
+
                 <img
                     class="purchase__image"
-                    src="{{ $product->image }}"
-                    alt="商品画像">
+                    src="{{ asset($product->image) }}"
+                    alt="{{ $product->name }}">
+
+                @else
+
+                <img
+                    class="purchase__image"
+                    src="{{ asset('storage/' . $product->image) }}"
+                    alt="{{ $product->name }}">
+
+                @endif
 
                 <div class="purchase__info">
 

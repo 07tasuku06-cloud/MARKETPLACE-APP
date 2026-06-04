@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -56,13 +58,57 @@ class ProductController extends Controller
         }
 
         return view('index', compact('products'));
+
+
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+
+        return view('sell', compact('categories'));
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image' => 'required|image',
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:categories,id',
+            'condition' => 'required|string',
+            'name' => 'required|string|max:255',
+            'brand' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|integer|min:1',
+        ]);
+
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+
+            $imagePath = $request
+                ->file('image')
+                ->store('products', 'public');
+        }
+
+        $product = Product::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'brand' => $request->brand,
+            'description' => $request->description,
+            'price' => $request->price,
+            'condition' => $request->condition,
+            'image' => $imagePath,
+            'is_sold' => false,
+        ]);
+
+        $product->categories()->attach(
+            $request->category_ids
+        );
+
+        return redirect('/');
     }
 
     /**

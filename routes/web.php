@@ -37,7 +37,7 @@ Route::middleware('guest')->group(function () {
     // 会員登録画面
     Route::get('/register', function () {
         return view('auth.register');
-    });
+    })->name('register');
 
     // 会員登録処理
     Route::post('/register', [AuthController::class, 'register']);
@@ -91,4 +91,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/mypage/profile', [ProfileController::class, 'edit']);
     Route::post('/mypage/profile', [ProfileController::class, 'update']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | 出品画面
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/sell', [ProductController::class, 'create']);
+    Route::post('/sell', [ProductController::class, 'store']);
 });
