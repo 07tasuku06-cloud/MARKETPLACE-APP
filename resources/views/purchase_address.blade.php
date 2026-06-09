@@ -59,10 +59,10 @@
             <input
                 class="auth__input"
                 type="text"
-                name="building"
-                value="{{ old('building', $user->building_name) }}">
+                name="building_name"
+                value="{{ old('building_name', $user->building_name) }}">
 
-            @error('building')
+            @error('building_name')
             <p class="auth__error">{{ $message }}</p>
             @enderror
 

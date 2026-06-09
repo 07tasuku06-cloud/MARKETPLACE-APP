@@ -17,17 +17,18 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        // ユーザー作成
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'is_profile_completed' => false, // ★追加（重要）
+            'is_profile_completed' => false,
         ]);
+
+        $user->sendEmailVerificationNotification();
 
         Auth::login($user);
 
-        return redirect('/mypage/profile');
+        return redirect('/email/verify');
     }
 
     /**
@@ -47,6 +48,14 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
+
+        $user = Auth::user();
+
+        // 未認証ブロック
+        if (!$user->hasVerifiedEmail()) {
+            Auth::logout();
+            return redirect('/email/verify');
+        }
 
         return redirect('/');
     }

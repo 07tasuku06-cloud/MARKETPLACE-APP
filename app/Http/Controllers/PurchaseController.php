@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Order;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -24,7 +26,7 @@ class PurchaseController extends Controller
     /**
      * 購入処理
      */
-    public function store(Request $request, $id)
+    public function store(PurchaseRequest $request, $id)
     {
         $product = Product::findOrFail($id);
 
@@ -34,11 +36,6 @@ class PurchaseController extends Controller
         }
 
         $user = Auth::user();
-
-        // バリデーション（最低限）
-        $request->validate([
-            'payment_method' => 'required',
-        ]);
 
         DB::transaction(function () use ($request, $product, $user) {
 
@@ -74,7 +71,7 @@ class PurchaseController extends Controller
         );
     }
 
-    public function updateAddress(Request $request, $product_id)
+    public function updateAddress(AddressRequest $request, $product_id)
     {
         $request->validate([
             'postal_code' => ['required'],

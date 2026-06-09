@@ -23,14 +23,6 @@ use Illuminate\Support\Facades\Auth;
 
             @csrf
 
-            @if ($errors->any())
-            <div class="error-box">
-                @foreach ($errors->all() as $error)
-                <p class="error-message">{{ $error }}</p>
-                @endforeach
-            </div>
-            @endif
-
             <!-- プロフィール画像 -->
             <div class="profile__image-area">
 
@@ -57,6 +49,9 @@ use Illuminate\Support\Facades\Auth;
                 </label>
 
             </div>
+            @error('profile_image')
+            <p class="error-message">{{ $message }}</p>
+            @enderror
 
             <!-- ユーザー名 -->
             <label class="auth__label">ユーザー名</label>

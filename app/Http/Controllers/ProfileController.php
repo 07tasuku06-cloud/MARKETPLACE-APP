@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
@@ -20,22 +21,15 @@ class ProfileController extends Controller
     /**
      * プロフィール保存処理
      */
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'postal_code' => 'required|string',
-            'address' => 'required|string',
-            'building_name' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         $user = Auth::user();
 
-        // ベースデータ
         $data = $validated;
         $data['is_profile_completed'] = true;
 
-        // 画像保存
         if ($request->hasFile('profile_image')) {
             $data['profile_image'] = $request->file('profile_image')
                 ->store('profiles', 'public');
@@ -45,7 +39,6 @@ class ProfileController extends Controller
 
         return redirect('/mypage');
     }
-
     /**
      * マイページ
      */
