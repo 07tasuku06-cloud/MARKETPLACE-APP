@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Category;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -71,18 +72,9 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $request->validate([
-            'image' => 'required|image',
-            'category_ids' => 'required|array',
-            'category_ids.*' => 'exists:categories,id',
-            'condition' => 'required|string',
-            'name' => 'required|string|max:255',
-            'brand' => 'nullable|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|integer|min:1',
-        ]);
+        $validated = $request->validated();
 
         $imagePath = null;
 

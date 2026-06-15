@@ -84,6 +84,7 @@
 
                 <select name="condition" class="sell__select">
 
+
                     <option value="" {{ old('condition') == null ? 'selected' : '' }}>
                         選択してください
                     </option>
@@ -105,6 +106,10 @@
                     </option>
 
                 </select>
+
+                @error('condition')
+                <p class="sell__error">{{ $message }}</p>
+                @enderror
 
             </div>
 
