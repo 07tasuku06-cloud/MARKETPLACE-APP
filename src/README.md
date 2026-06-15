@@ -24,8 +24,18 @@ php artisan migrate
 
 php artisan storage:link
 
-npm install
-npm run dev
+```
+
+---
+
+## メール認証確認
+
+本プロジェクトではメール認証の確認に MailHog を使用しています。
+
+新規会員登録後、以下のURLにアクセスすると認証メールを確認できます。
+
+```text
+http://localhost:8025
 ```
 
 ---
@@ -67,9 +77,13 @@ docker-compose logs php
 ## 実行環境
 
 - PHP 8.x（Laravel 10）
-- MySQL
-- Docker（Nginx / PHP / MySQL）
-- Node.js（Vite）
+- MySQL 8.0
+- Docker
+    - Nginx 1.21.1
+    - PHP 8.1-fpm
+    - MySQL 8.0.26
+    - phpMyAdmin
+    - MailHog
 
 ---
 
@@ -78,9 +92,3 @@ docker-compose logs php
 本プロジェクトのデータベース構造は以下の通りです。
 
 ![ER図](docs/erd.png)
-
-## トラブルシューティング
-
-Docker環境によって権限設定が異なるため、
-コンテナ起動時にエラーが発生する場合は
-docker-compose.yml の user 設定を調整してください。
