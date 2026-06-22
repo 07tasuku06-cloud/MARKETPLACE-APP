@@ -9,6 +9,8 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 class PurchaseController extends Controller
 {
@@ -85,5 +87,35 @@ class PurchaseController extends Controller
         ]);
 
         return redirect('/purchase/' . $product_id);
+    }
+
+    public function checkout($id)
+{
+    $product = Product::findOrFail($id);
+
+    if ($product->is_sold) {
+        return redirect('/')->with('error', 'この商品は売り切れです');
+    }
+
+    Stripe::setApiKey(config('services.stripe.secret'));
+
+    $session = Session::create([
+        'payment_method_types' => ['card'],
+        'line_items' => [[
+            'price_data' => [
+                'currency' => 'jpy',
+                'product_data' => [
+                    'name' => $product->name,
+                ],
+                'unit_amount' => $product->price,
+            ],
+            'quantity' => 1,
+        ]],
+        'mode' => 'payment',
+        'success_url' => url('/'),
+        'cancel_url' => url('/purchase/' . $id),
+    ]);
+
+        return redirect($session->url);
     }
 }

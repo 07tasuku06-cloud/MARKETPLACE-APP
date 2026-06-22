@@ -10,7 +10,8 @@
         "laravel-lang/lang": "^12.17",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "stripe/stripe-php": "^20.2"
     },
     "require-dev": {
         "beyondcode/laravel-er-diagram-generator": "^4.0",
