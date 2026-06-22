@@ -49,8 +49,8 @@ class PurchaseTest extends TestCase
                 'building' => 'テストビル101',
             ]);
 
-        $response->assertRedirect('/');
-
+        $response->assertRedirect('/mypage?page=buy');
+        
         $this->assertDatabaseHas('orders', [
             'user_id' => $user->id,
             'product_id' => $product->id,
