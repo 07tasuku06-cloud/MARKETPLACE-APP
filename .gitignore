@@ -17,4 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-docker/mysql/
+docker/mysql/.env.testing
+.env.testing
