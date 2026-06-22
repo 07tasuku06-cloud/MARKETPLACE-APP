@@ -106,6 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/purchase/{id}', [PurchaseController::class, 'show']);
     Route::post('/purchase/{id}', [PurchaseController::class, 'store']);
+    Route::post('/purchase/{id}/checkout', [PurchaseController::class, 'checkout']);
 
     Route::get('/purchase/address/{product_id}', [PurchaseController::class, 'showAddressForm']);
     Route::post('/purchase/address/{product_id}', [PurchaseController::class, 'updateAddress']);

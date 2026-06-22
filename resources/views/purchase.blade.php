@@ -50,7 +50,7 @@ use Illuminate\Support\Str;
             </div>
 
             <!-- フォーム開始 -->
-            <form method="POST" action="/purchase/{{ $product->id }}">
+            <form method="POST" action="/purchase/{{ $product->id }}/checkout">
                 @csrf
 
                 <!-- 支払い方法 -->
