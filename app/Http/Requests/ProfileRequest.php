@@ -26,6 +26,7 @@ class ProfileRequest extends FormRequest
             'name' => ['required', 'max:20'],
             'postal_code' => ['required', 'regex:/^\d{3}-\d{4}$/'],
             'address' => ['required'],
+            'building_name' => ['nullable', 'string', 'max:255'],
         ];
     }
     public function messages(): array

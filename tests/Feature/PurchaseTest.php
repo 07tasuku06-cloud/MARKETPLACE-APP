@@ -50,7 +50,7 @@ class PurchaseTest extends TestCase
             ]);
 
         $response->assertRedirect('/mypage?page=buy');
-        
+
         $this->assertDatabaseHas('orders', [
             'user_id' => $user->id,
             'product_id' => $product->id,
