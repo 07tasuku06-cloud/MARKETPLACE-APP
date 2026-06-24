@@ -8,7 +8,7 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, $product_id)
+    public function store(CommentRequest $request, $product_id)
     {
         Comment::create([
             'user_id' => auth()->id(),
